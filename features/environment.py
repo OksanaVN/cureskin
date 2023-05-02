@@ -4,23 +4,39 @@ from selenium.webdriver.support.wait import WebDriverWait
 from app.application import Application
 
 
-def browser_init(context):
+def browser_init(context, test_name):
     """
     :param context: Behave context
     """
-    service = Service('C:/User/soxano/Documents/Automation/python-selenium-automation/chromedriver.exe')
+    # service = Service('C:/User/soxano/Documents/Automation/python-selenium-automation/chromedriver.exe')
     # context.driver = webdriver.Chrome(service=service)
     # # service = Service('C:/Users/oxano/Documents/Automation/python-selenium-automation/geckodriver.exe') #Firefox browser
     # # context.driver = webdriver.Firefox(service=service) #Firefox browser
 
 
     ## HEADLESS MODE ####
-    options = webdriver.ChromeOptions()
-    options.add_argument('--headless')
-    context.driver = webdriver.Chrome(
-        chrome_options=options,
-        service=service
-    )
+    # options = webdriver.ChromeOptions()
+    # options.add_argument('--headless')
+    # context.driver = webdriver.Chrome(
+    #     chrome_options=options,
+    #     service=service
+    # )
+
+
+    # for browerstack ###
+
+    desired_cap = {
+        'browserName': 'Firefox',
+        'bstack:options': {
+            'os': 'Windows',
+            'osVersion': '10',
+            'sessionName': test_name
+        }
+    }
+    bs_user = 'oksana_iPLW6X'
+    bs_key = 'WKjsVGNJ3GGmpQqcsKUy'
+    url = f'http://{bs_user}:{bs_key}@hub-cloud.browserstack.com/wd/hub'
+    context.driver = webdriver.Remote(url, desired_capabilities=desired_cap)
 
 
     context.driver.maximize_window()
@@ -31,7 +47,7 @@ def browser_init(context):
 
 def before_scenario(context, scenario):
     print('\nStarted scenario: ', scenario.name)
-    browser_init(context)
+    browser_init(context, scenario.name)
 
 
 def before_step(context, step):
