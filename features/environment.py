@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.wait import WebDriverWait
 from app.application import Application
+from selenium.webdriver.chrome.options import Options
 
 
 def browser_init(context, test_name):
@@ -12,6 +13,13 @@ def browser_init(context, test_name):
     # context.driver = webdriver.Chrome(service=service)
     # # service = Service('C:/Users/oxano/Documents/Automation/python-selenium-automation/geckodriver.exe') #Firefox browser
     # # context.driver = webdriver.Firefox(service=service) #Firefox browser
+
+
+       #Mobile
+    mobile_emulation = {"deviceName": "iPhone 12 Pro"}
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_experimental_option("mobileEmulation", mobile_emulation)
+    context.driver = webdriver.Chrome(options=chrome_options)
 
 
     ## HEADLESS MODE ####
@@ -25,19 +33,18 @@ def browser_init(context, test_name):
 
     # for browerstack ###
 
-    desired_cap = {
-        'browserName': 'Firefox',
-        'bstack:options': {
-            'os': 'Windows',
-            'osVersion': '10',
-            'sessionName': test_name
-        }
-    }
-    bs_user = 'oksana_iPLW6X'
-    bs_key = 'WKjsVGNJ3GGmpQqcsKUy'
-    url = f'http://{bs_user}:{bs_key}@hub-cloud.browserstack.com/wd/hub'
-    context.driver = webdriver.Remote(url, desired_capabilities=desired_cap)
-
+    # desired_cap = {
+    #     'browserName': 'Firefox',
+    #     'bstack:options': {
+    #         'os': 'Windows',
+    #         'osVersion': '10',
+    #         'sessionName': test_name
+    #     }
+    # }
+    # bs_user = 'oksana_iPLW6X'
+    # bs_key = 'WKjsVGNJ3GGmpQqcsKUy'
+    # url = f'http://{bs_user}:{bs_key}@hub-cloud.browserstack.com/wd/hub'
+    # context.driver = webdriver.Remote(url, desired_capabilities=desired_cap)
 
     context.driver.maximize_window()
     context.driver.implicitly_wait(4)
