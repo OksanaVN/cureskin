@@ -3,6 +3,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.wait import WebDriverWait
 from app.application import Application
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.firefox.options import Options
 
 
 def browser_init(context, test_name):
@@ -11,16 +12,21 @@ def browser_init(context, test_name):
     """
     # service = Service('C:/User/soxano/Documents/Automation/python-selenium-automation/chromedriver.exe')
     # context.driver = webdriver.Chrome(service=service)
-    # # service = Service('C:/Users/oxano/Documents/Automation/python-selenium-automation/geckodriver.exe') #Firefox browser
-    # # context.driver = webdriver.Firefox(service=service) #Firefox browser
+
+
+    # # Firefox
+    # options = Options()
+    # options.binary_location = r'C:/Program Files/Mozilla Firefox/firefox.exe'
+    # context.driver = webdriver.Firefox(options=options, executable_path=r'C:/Users/oxano/Documents/Internship/cureskin/geckodriver.exe')
+    # # # Firefox
 
 
        #Mobile
-    mobile_emulation = {"deviceName": "iPhone 12 Pro"}
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_experimental_option("mobileEmulation", mobile_emulation)
-    context.driver = webdriver.Chrome(options=chrome_options)
-
+    # mobile_emulation = {"deviceName": "iPhone 12 Pro"}
+    # chrome_options = webdriver.ChromeOptions()
+    # chrome_options.add_experimental_option("mobileEmulation", mobile_emulation)
+    # context.driver = webdriver.Chrome(options=chrome_options)
+    #
 
     ## HEADLESS MODE ####
     # options = webdriver.ChromeOptions()
@@ -29,6 +35,13 @@ def browser_init(context, test_name):
     #     chrome_options=options,
     #     service=service
     # )
+
+
+    ## HEADLESS MODE Firefox ####
+    options = Options()
+    options.headless = True
+    options.binary_location = r'C:/Program Files/Mozilla Firefox/firefox.exe'
+    context.driver = webdriver.Firefox(options=options, executable_path=r'C:/Users/oxano/Documents/Internship/cureskin/geckodriver.exe')
 
 
     # for browerstack ###
